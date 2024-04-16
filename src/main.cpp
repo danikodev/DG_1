@@ -3,13 +3,17 @@
 
 Servo servo;
 
+int button_pin = DD2;
+int servo_pin = A1;
+int valve_pin = A4; // клапан
+
 void setup()
 {
     // pinMode(LED_BUILTIN, OUTPUT);
-    servo.attach(A1);
+    servo.attach(servo_pin);
     Serial.begin(9600);
-    pinMode(DD2, INPUT_PULLUP);
-    pinMode(A4, OUTPUT);
+    pinMode(button_pin, INPUT_PULLUP);
+    pinMode(valve_pin, OUTPUT);
 
     servo.write(10);
 }
@@ -26,18 +30,18 @@ void loop()
     //     servo.write(pos);
     //     delay(15);
     // }
-    if (digitalRead(DD2) == 0){
-        digitalWrite(A4, 1); // вкл лампу
-        Serial.println(9); 
-        delay(20); // жду
-        digitalWrite(A4, 0); // выкл лампу
-        Serial.println(99); 
-        servo.write(50); // открываю серво
-        Serial.println(50); 
-        delay(300); // жду
-        servo.write(10); // закрываю серво
-        Serial.println(10); 
-        delay(100);
+    if (digitalRead(button_pin) == 0){
+        // Выстрел
+        digitalWrite(valve_pin, 1); // открыть клапан
+        delay(20);           // жду открытие клапана
+        digitalWrite(valve_pin, 0); // закрываю клапан
+        delay(10);           // жду пока выйдет воздух
+
+        // Перезарядка
+        servo.write(50); // открыть затвор
+        delay(300);      // подождать открытие затвора
+        servo.write(10); // закрыть затвор
+        delay(100);      // жду закрытие затвора
         
     }
 }
