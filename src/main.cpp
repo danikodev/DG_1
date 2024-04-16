@@ -6,8 +6,12 @@ Servo servo;
 void setup()
 {
     // pinMode(LED_BUILTIN, OUTPUT);
-    servo.attach(LED_BUILTIN);
-    Serial.begin(115200);
+    servo.attach(A1);
+    Serial.begin(9600);
+    pinMode(DD2, INPUT_PULLUP);
+    pinMode(LED_BUILTIN, OUTPUT);
+
+    servo.write(10);
 }
 
 void loop()
@@ -22,11 +26,15 @@ void loop()
     //     servo.write(pos);
     //     delay(15);
     // }
-    servo.write(50);
-    Serial.println(50);
-    delay(300);
-    servo.write(10);
-    Serial.println(10);
-    // end
-    delay(200);
+    if (digitalRead(DD2) == 0){
+        digitalWrite(LED_BUILTIN, 1); // вкл лампу
+        delay(500); // жду
+        digitalWrite(LED_BUILTIN, 0); // выкл лампу
+        servo.write(50); // открываю серво
+        Serial.println(50); 
+        delay(300); // жду
+        servo.write(10); // закрываю серво
+        Serial.println(10); 
+        
+    }
 }
