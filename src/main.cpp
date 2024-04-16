@@ -9,7 +9,7 @@ void setup()
     servo.attach(A1);
     Serial.begin(9600);
     pinMode(DD2, INPUT_PULLUP);
-    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(A4, OUTPUT);
 
     servo.write(10);
 }
@@ -27,14 +27,17 @@ void loop()
     //     delay(15);
     // }
     if (digitalRead(DD2) == 0){
-        digitalWrite(LED_BUILTIN, 1); // вкл лампу
-        delay(500); // жду
-        digitalWrite(LED_BUILTIN, 0); // выкл лампу
+        digitalWrite(A4, 1); // вкл лампу
+        Serial.println(9); 
+        delay(20); // жду
+        digitalWrite(A4, 0); // выкл лампу
+        Serial.println(99); 
         servo.write(50); // открываю серво
         Serial.println(50); 
         delay(300); // жду
         servo.write(10); // закрываю серво
         Serial.println(10); 
+        delay(100);
         
     }
 }
