@@ -3,9 +3,9 @@
 
 Servo servo;
 
-int button_pin = DD2;
-int servo_pin = A1;
-int valve_pin = A4; // клапан
+int button_pin = A4;
+int servo_pin = A3;
+int valve_pin = A5; // клапан
 
 void setup()
 {
